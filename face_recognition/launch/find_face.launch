@@ -1,0 +1,8 @@
+<launch>
+
+ <include file="$(find freenect_launch)/launch/freenect.launch"/>
+
+ <node pkg="face_recognition" type="Fserver" name="face_recognition" />
+ <node pkg="face_recognition" type="Fclient" name="FaceClient" output="screen"/>
+
+</launch>
