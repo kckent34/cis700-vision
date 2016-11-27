@@ -1,10 +1,9 @@
 #!/usr/bin/env python
-import roslib
 import cv2
 from cv_bridge import CvBridge, CvBridgeError
 import rospy
 from std_msgs.msg import String, Float64MultiArray
-from trainSVM import SceneRecognizer
+from SceneRecognizer import SceneRecognizer
 import sensor_msgs.msg
 from PIL import Image
 import numpy as np

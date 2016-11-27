@@ -1,10 +1,11 @@
-from gist import *
-from sklearn import svm
-from sklearn.model_selection import train_test_split, cross_val_score
-import numpy as np
-# import pickle
-from sklearn.externals import joblib
+
 import matplotlib.pyplot as plt
+from sklearn import svm
+from sklearn.externals import joblib
+from sklearn.model_selection import train_test_split, cross_val_score
+
+from gist import *
+
 
 class SceneRecognizer:
     def __init__(self, classes):
@@ -13,7 +14,7 @@ class SceneRecognizer:
         self.class_maps = {0:'hallway',1:'office',2:'classroom'}
         self.current_descriptor = None
 
-    def train(self, filename = None):
+    def train(self, c_val, filename=None):
         if filename is None:
             #get matrices
             X,Y = create_matrices(self.dir)
@@ -24,7 +25,7 @@ class SceneRecognizer:
             X = np.loadtxt(X_file)
             Y = np.loadtxt(Y_file)
 
-        self.clf = svm.SVC(decision_function_shape='ovo',probability=True, C=100)
+        self.clf = svm.SVC(decision_function_shape='ovo',probability=True, C=c_val)
         X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.3)
         self.clf.fit(X_train, Y_train)
         joblib.dump(self.clf, 'SVM_model.pkl')
@@ -84,9 +85,6 @@ class SceneRecognizer:
     def probs(self):
         probs = self.clf.predict_proba(self.current_descriptor)
         return probs
-
-
-
 
 
 # def main():
